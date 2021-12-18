@@ -26,13 +26,23 @@ class todo{
         this._status = value;
     }
 }
-class groups{
+class project{
     
-    constructor(){
-        const todo_list = [];
+    constructor(todo_list = []){
+        this.todo_list = todo_list;
 
     }
+    
+    set todo_list(value){
+        this._todo_list = value
+    }
+    get todo_list(){
+        return this._todo_list;
+    }
 
+    append_todo_list(item){
+        todo_list.push(item);
+    }
 }
 function add_todo(){
  
@@ -84,3 +94,4 @@ document.addEventListener('DOMContentLoaded', function() {
    
 });
 let todo_list = [];
+let project_list = [];
