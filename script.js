@@ -64,7 +64,10 @@ function add_todo(){
     const discreption = document.querySelector('#input_discreption').value;
 
     const todo_item = new todo(title,discreption);
-    
+    const radioButtons = document.querySelectorAll('input[name="choice"]');
+
+
+
     
     todo_list.push(todo_item);
     console.log(todo_list)
@@ -128,19 +131,29 @@ function listProjects(){
     ul.innerHTML = ''
     for(let i = 0 ; i < project_list.length ; i++){
         let li = document.createElement('li');
-        let button = createProjectButton(project_list[i].title);
+        let button = createProjectButton(project_list[i]);
+        
         li.append(button);
         ul.append(li);
     }
     
 }
-function createProjectButton(projectName){
+function createProjectButton(project){
    
     const button = document.createElement('button');
     button.className = "btn btn-primary";
     button.style.margin = "3px";
-    button.textContent = projectName;
+    button.textContent = project.title;
+    button.setAttribute("name","projectButton");
+    button.setAttribute("type","radio");
+    button.setAttribute("value",project.title);
+    button.addEventListener('click',()=>{
+        listTodo(project);
+    });
     return button;
 
 }
-function listTodo(){}
+function listTodo(project){
+    
+
+}
