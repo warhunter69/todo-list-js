@@ -88,10 +88,24 @@ function add_todo(){
     console.log(project_list);
 }
 function acordion(){
+
     const main = document.querySelector('#main_div');
     main.innerHTML = ``;
+    const radioButtons = document.querySelectorAll('input[name="projectButton"]');
+    //console.log(radioButtons)
+    let selectedValue;
+            for (const rb of radioButtons) {
+                if (rb.checked) {
+                    selectedValue = rb.value;
+                    break;
+                }
+            }
+            //alert(selectedValue);
+            //console.log(selectedValue)
+
+    const project = project_list.find(o => o.title === selectedValue);
     // we can rest the entier main or we can only add the last element
-    for(let i = 0 ; i < todo_list.length ; i++){
+    for(let i = 0 ; i < project.todo_list.length ; i++){
        //let div = 
        let div = document.createElement('div');
        div.innerHTML=
@@ -116,7 +130,7 @@ function acordion(){
   }
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+    const defultProject = new project([],"Defult");
     const submit_todo = document.querySelector('#submit_todo');
     submit_todo.addEventListener('click', ()=>{
         add_todo();
@@ -127,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
            
         add_project();
         listProjects();
+        
     })
-    const defultProject = new project([],"Defult");
     project_list.push(defultProject);
     listProjects();
     document.getElementById("Defult").checked = true;
@@ -167,7 +181,7 @@ function createProjectButton(project){
     button.setAttribute("value",project.title);
     button.id = project.title;
     button.addEventListener('click',()=>{
-        listTodo(project);
+        acordion();
     });
     return button;
 
