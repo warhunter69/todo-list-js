@@ -55,7 +55,8 @@ class project{
     }
 
     append_todo_list(item){
-        todo_list.push(item);
+        this._todo_list.push(item);
+        console.log('aaa',this._todo_list);
     }
 }
 function add_todo(){
@@ -64,13 +65,27 @@ function add_todo(){
     const discreption = document.querySelector('#input_discreption').value;
 
     const todo_item = new todo(title,discreption);
-    const radioButtons = document.querySelectorAll('input[name="choice"]');
+    const radioButtons = document.querySelectorAll('input[name="projectButton"]');
+    //console.log(radioButtons)
+    let selectedValue;
+            for (const rb of radioButtons) {
+                if (rb.checked) {
+                    selectedValue = rb.value;
+                    break;
+                }
+            }
+            //alert(selectedValue);
+            //console.log(selectedValue)
 
-
+    const project = project_list.find(o => o.title === selectedValue);
+    project.append_todo_list(todo_item);
+    //console.log(project)        
 
     
     todo_list.push(todo_item);
-    console.log(todo_list)
+
+    //console.log(todo_list);
+    console.log(project_list);
 }
 function acordion(){
     const main = document.querySelector('#main_div');
@@ -116,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const defultProject = new project([],"Defult");
     project_list.push(defultProject);
     listProjects();
+    document.getElementById("Defult").checked = true;
     
 });
 let todo_list = [];
@@ -132,21 +148,24 @@ function listProjects(){
     for(let i = 0 ; i < project_list.length ; i++){
         let li = document.createElement('li');
         let button = createProjectButton(project_list[i]);
-        
+        let label = createLable(project_list[i]);
         li.append(button);
+        li.append(label)
         ul.append(li);
+
     }
     
 }
 function createProjectButton(project){
    
-    const button = document.createElement('button');
-    button.className = "btn btn-primary";
+    const button = document.createElement('input');
+    button.className = "btn-check";
     button.style.margin = "3px";
     button.textContent = project.title;
     button.setAttribute("name","projectButton");
     button.setAttribute("type","radio");
     button.setAttribute("value",project.title);
+    button.id = project.title;
     button.addEventListener('click',()=>{
         listTodo(project);
     });
@@ -154,6 +173,15 @@ function createProjectButton(project){
 
 }
 function listTodo(project){
-    
+
+
+}
+function createLable(project){
+
+    const lable = document.createElement('label');
+    lable.className = "btn btn-primary";
+    lable.textContent = project.title;
+    lable.setAttribute("for",project.title);
+    return lable;
 
 }
